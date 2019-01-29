@@ -16,32 +16,24 @@ node {
       archive 'target/*.war'
    }
    stage('Build Docker Image') {
-        sh "docker build . -t chantipavan9/test_uri:$BUILD_NUMBER"
+        sh "docker build . -t chantipavan9/pubg_world:$BUILD_NUMBER"
    }
    stage('Create latest Tag') {
-        sh "docker tag chantipavan9/test_uri:$BUILD_NUMBER chantipavan9/test_uri:latest"
+        sh "docker tag chantipavan9/pubg_world:$BUILD_NUMBER chantipavan9/pubg_world:latest"
    }
    stage('Push Images to Docker Hub') {
-        sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/test_uri:latest && docker push chantipavan9/test_uri:latest"
+        sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/pubg_world:latest && docker push chantipavan9/pubg_world:latest"
    }
     stage('Cleanup containers') {
         sh "docker stop mypubg && docker rm mypubg"
    }
    stage('Deploy the latest Image'){
-       sh "docker run -d --name mypubg -p 8019:8080 chantipavan9/test_uri:latest"
+       sh "docker run -d --name mypubg -p 8019:8080 chantipavan9/pubg_world:latest"
    }
    stage('Cleanup Image') {
-        sh "docker rmi chantipavan9/test_uri:$BUILD_NUMBER"
+        sh "docker rmi chantipavan9/pubg_world:$BUILD_NUMBER"
    }
-   openshift.withCluster() {
-   openshift.withProject( "${params.PROJECT}" ) {
-        def dc = openshift.selector( "dc/${params.APPLICATION}" )
-        echo "Kind: ${dc.object().kind}"
-        def rm = dc.rollout()
-        def result = rollout.latest()
-        echo "Run: ${result.actions[0].cmd}"
-        echo "Deployment: ${result.status}"
-    }
+   
 }
 
 
