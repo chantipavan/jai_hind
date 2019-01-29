@@ -5,7 +5,7 @@ node {
       // Get some code from a GitHub repository
         git 'https://github.com/chantipavan/jai_hind.git'
       // Get the Maven tool.
-      // ** NOTE: This 'm1' Maven tool must be configured
+      // ** NOTE: This 'M1' Maven tool must be configured
       // **       in the global configuration.           
       mvnHome = tool 'M1'
    }
@@ -25,10 +25,10 @@ node {
         sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/test_uri:latest && docker push chantipavan9/test_uri:latest"
    }
     stage('Cleanup containers') {
-        sh "docker stop myspark && docker rm myspark"
+        sh "docker stop mypubg && docker rm mypubg"
    }
    stage('Deploy the latest Image'){
-       sh "docker run -d --name myspark -p 8019:8080 chantipavan9/test_uri:latest"
+       sh "docker run -d --name mypubg -p 8019:8080 chantipavan9/test_uri:latest"
    }
    stage('Cleanup Image') {
         sh "docker rmi chantipavan9/test_uri:$BUILD_NUMBER"
