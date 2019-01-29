@@ -33,5 +33,15 @@ node {
    stage('Cleanup Image') {
         sh "docker rmi chantipavan9/test_uri:$BUILD_NUMBER"
    }
-   
+   openshift.withCluster() {
+    openshift.withProject( "${params.PROJECT}" ) {
+        def dc = openshift.selector( "dc/${params.APPLICATION}" )
+        echo "Kind: ${dc.object().kind}"
+        def rm = dc.rollout()
+        def result = rollout.latest()
+        echo "Run: ${result.actions[0].cmd}"
+        echo "Deployment: ${result.status}"
+    }
 }
+
+
