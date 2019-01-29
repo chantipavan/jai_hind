@@ -22,9 +22,7 @@ node {
         sh "docker tag chantipavan9/test_uri:$BUILD_NUMBER chantipavan9/test_uri:latest"
    }
    stage('Push Images to Docker Hub') {
-        sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/test_uri:latest && docker push 
-
-chantipavan9/test_uri:latest"
+        sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/test_uri:latest && docker push chantipavan9/test_uri:latest"
    }
     stage('Cleanup containers') {
         sh "docker stop myspark && docker rm myspark"
