@@ -32,5 +32,6 @@ node {
    }
    stage('Cleanup Image') {
         sh "docker rmi chantipavan9/test_uri:$BUILD_NUMBER"
+   }
    
 }
