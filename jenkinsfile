@@ -5,9 +5,9 @@ node {
       // Get some code from a GitHub repository
         git 'https://github.com/chantipavan/jai_hind.git'
       // Get the Maven tool.
-      // ** NOTE: This 'M1' Maven tool must be configured
+      // ** NOTE: This 'm1' Maven tool must be configured
       // **       in the global configuration.           
-      mvnHome = tool 'M1'
+      mvnHome = tool 'm1'
    }
    stage('Build') {
         sh "mvn clean package"
@@ -28,7 +28,11 @@ node {
         sh "docker stop pavanpubg && docker rm pavanpubg"
    }
    stage('Deploy the latest Image'){
+<<<<<<< HEAD
        sh "docker run -d --name mypubg -p 8143:8080 chantipavan9/test_uri:latest"
+=======
+       sh "docker run -d --name mypubg -p 8019:8080 chantipavan9/pubg_world:latest"
+>>>>>>> f3627042fb14a434a097aece43d1931bde1107ab
    }
    stage('Cleanup Image') {
         sh "docker rmi chantipavan9/test_uri:$BUILD_NUMBER"
