@@ -1,0 +1,4 @@
+myworld:
+ image: "chantipavan9/pubg_world:latest"
+ ports: 
+      - "82:8080"
