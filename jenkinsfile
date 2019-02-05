@@ -16,22 +16,22 @@ node {
       archive 'target/*.war'
    }
    stage('Build Docker Image') {
-        sh "docker build . -t chantipavan9/pubg_world:$BUILD_NUMBER"
+        sh "docker build . -t chantipavan9/test_uri:$BUILD_NUMBER"
    }
    stage('Create latest Tag') {
-        sh "docker tag chantipavan9/pubg_world:$BUILD_NUMBER chantipavan9/pubg_world:latest"
+        sh "docker tag chantipavan9/test_uri:$BUILD_NUMBER chantipavan9/test_uri:latest"
    }
    stage('Push Images to Docker Hub') {
-        sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/pubg_world:latest && docker push chantipavan9/pubg_world:latest"
+        sh "docker login -u chantipavan9 -p $dockerhub && docker push chantipavan9/test_uri:latest && docker push chantipavan9/test_uri:latest"
    }
     stage('Cleanup containers') {
         sh "docker stop pavanpubg && docker rm pavanpubg"
    }
    stage('Deploy the latest Image'){
-       sh "docker run -d --name mypubg -p 8143:8080 chantipavan9/pubg_world:latest"
+       sh "docker run -d --name mypubg -p 8143:8080 chantipavan9/test_uri:latest"
    }
    stage('Cleanup Image') {
-        sh "docker rmi chantipavan9/pubg_world:$BUILD_NUMBER"
+        sh "docker rmi chantipavan9/test_uri:$BUILD_NUMBER"
    }
    
 }
