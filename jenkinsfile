@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 node {
    def mvnHome
    stage('Git Clone') { // for display purposes
